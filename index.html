@@ -19,8 +19,8 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Adsgram Script -->
-    <script src="https://sad.adsgram.ai/js/sad-reward.js"></script>
+    <!-- Updated Adsgram SDK (v2) -->
+    <script src="https://sad.adsgram.ai/js/sad-reward-v2.js"></script>
     
     <style>
         .hide-scrollbar::-webkit-scrollbar { display: none; }
@@ -129,7 +129,7 @@
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 -translate-y-20 opacity-0 z-50 transition-all duration-300">
+    <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 -translate-y-20 opacity-0 z-50 transition-all duration-300 pointer-events-none">
         <div class="bg-gray-800 text-white py-2.5 px-5 rounded-full shadow-2xl border border-indigo-500/30 flex items-center gap-2 text-xs font-medium">
             <i class="fas fa-info-circle text-indigo-400"></i>
             <span id="toast-message"></span>
@@ -150,7 +150,7 @@
         document.getElementById('user-display-name').textContent = tgUser.name;
 
         const BASE_API_URL = 'https://my-video-backend-lake.vercel.app/api/videos';
-        const ADSGRAM_BLOCK_ID = "44195"; // আপনার আপডেটকৃত Adsgram Unit ID
+        const ADSGRAM_BLOCK_ID = "44195"; // আপনার Adsgram Block ID
 
         let currentPage = 1;
         let currentQuery = 'hd';
@@ -168,7 +168,7 @@
             setTimeout(() => {
                 toast.classList.add('-translate-y-20', 'opacity-0');
                 toast.classList.remove('translate-y-0', 'opacity-100');
-            }, 2500);
+            }, 3000);
         }
 
         async function fetchVideos() {
@@ -246,27 +246,35 @@
         async function watchRewardedAd() {
             triggerHaptic();
 
+            // Check Adsgram SDK availability
             if (!window.Adsgram) {
-                showToast("Ad System লোড হয়নি, ভিডিও প্লে হচ্ছে...");
+                showToast("Ad SDK লোড হয়নি! সরাসরি চালু করা হচ্ছে...");
                 unlockAndPlay();
                 return;
             }
 
+            const adBtn = document.getElementById('ad-btn');
+            adBtn.disabled = true;
+            adBtn.innerHTML = `<i class="fas fa-spinner fa-spin text-base"></i> Ad লোড হচ্ছে...`;
+
             try {
                 const AdController = window.Adsgram.init({ blockId: ADSGRAM_BLOCK_ID });
-                
                 const result = await AdController.show();
                 
                 if (result && result.done) {
-                    showToast("অ্যাড দেখা শেষ! ভিডিও শুরু হচ্ছে...");
+                    showToast("অ্যাড দেখা সফল হয়েছে! ভিডিও প্লে হচ্ছে...");
                     unlockAndPlay();
                 } else {
-                    showToast("ভিডিও দেখতে হলে অ্যাডটি শেষ পর্যন্ত দেখতে হবে!");
+                    showToast("ভিডিও দেখতে হলে সম্পূর্ণ অ্যাড দেখতে হবে!");
                 }
             } catch (e) {
-                console.warn("Ad skip or error:", e);
-                showToast("অ্যাড লোড হয়নি, ভিডিও প্লে করা হচ্ছে...");
+                console.warn("Adsgram Error/Skip:", e);
+                // Handle fallback if no ads are available or user closed ad early
+                showToast("বর্তমানে কোনো অ্যাড এভেলেবল নেই, প্লে করা হচ্ছে...");
                 unlockAndPlay();
+            } finally {
+                adBtn.disabled = false;
+                adBtn.innerHTML = `<i class="fas fa-play-circle text-base"></i> Watch Ad & Play`;
             }
         }
 
