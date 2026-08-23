@@ -19,7 +19,7 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Adsgram SDK (Updated to sad.min.js) -->
+    <!-- Adsgram SDK (sad.min.js) -->
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
     
     <style>
@@ -43,7 +43,7 @@
             </div>
 
             <!-- Premium Channel Button -->
-            <a href="https://t.me/your_telegram_channel" target="_blank" onclick="triggerHaptic()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-black font-extrabold px-3 py-1.5 rounded-full text-xs shadow-lg transition-all transform active:scale-95 border border-amber-200">
+            <a href="https://t.me/sajid182026" target="_blank" onclick="triggerHaptic()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-black font-extrabold px-3 py-1.5 rounded-full text-xs shadow-lg transition-all transform active:scale-95 border border-amber-200">
                 <i class="fas fa-crown text-amber-900 animate-bounce"></i> 
                 <span>প্রিমিয়াম ভিডিও দেখতে জয়েন হন</span>
             </a>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <!-- Updated App Branding -->
+        <!-- App Branding -->
         <h1 class="text-2xl md:text-3xl font-extrabold text-center mb-1 drop-shadow">DesiXStream VIP</h1>
         <p class="text-center text-xs text-indigo-100 mb-5">18+ Premium & Exclusive Video Collection</p>
 
@@ -155,7 +155,10 @@
 
         let currentPage = 1;
         let currentQuery = 'hd';
+        
+        // Video Tracking & Ad state variable
         let selectedVideoEmbed = null;
+        let adIsRunning = false;
 
         function triggerHaptic() {
             if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
@@ -232,8 +235,10 @@
             document.getElementById('prev-btn').disabled = (currentPage === 1);
         }
 
+        /* Modal & Rewarded Ad Functions */
         function openUnlockModal(embedUrl) {
             triggerHaptic();
+            // যে ভিডিওতে ক্লিক করেছে, শুধু সেটার লিংক সংরক্ষণ
             selectedVideoEmbed = embedUrl;
             document.getElementById('unlock-modal').classList.remove('hidden');
         }
@@ -241,22 +246,28 @@
         function closeUnlockModal() {
             triggerHaptic();
             document.getElementById('unlock-modal').classList.add('hidden');
-            selectedVideoEmbed = null;
+            // এখানে selectedVideoEmbed null করা হয়নি যেন পরবর্তীতে ব্যবহার করা যায়
         }
 
-        /* Updated Adsgram Rewarded Ad Handling */
         async function watchRewardedAd() {
             triggerHaptic();
 
+            if (adIsRunning) return;
+
             if (!window.Adsgram) {
-                console.error("Adsgram SDK not loaded");
                 showToast("Adsgram লোড হয়নি। কিছুক্ষণ পরে আবার চেষ্টা করুন।");
+                return;
+            }
+
+            if (!selectedVideoEmbed) {
+                showToast("ভিডিও লিংক পাওয়া যায়নি। আবার চেষ্টা করুন।");
                 return;
             }
 
             const adBtn = document.getElementById('ad-btn');
 
             try {
+                adIsRunning = true;
                 adBtn.disabled = true;
                 adBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> অ্যাড লোড হচ্ছে...`;
 
@@ -267,26 +278,30 @@
                 const result = await AdController.show();
                 console.log("Adsgram result:", result);
 
-                if (result && result.done) {
+                // শুধু সম্পূর্ণ Rewarded Ad হলেই নির্দিষ্ট ভিডিওটি প্লে হবে
+                if (result && result.done === true) {
+                    const videoToPlay = selectedVideoEmbed;
+
                     showToast("অ্যাড সম্পন্ন! ভিডিও শুরু হচ্ছে...");
-                    unlockAndPlay();
+
+                    // Modal বন্ধ করা
+                    document.getElementById('unlock-modal').classList.add('hidden');
+
+                    // ক্লিক করা নির্দিষ্ট ভিডিও চালু
+                    if (videoToPlay) {
+                        playVideo(videoToPlay);
+                    }
                 } else {
-                    showToast("অ্যাডটি সম্পূর্ণ করতে হবে।");
+                    showToast("ভিডিও দেখতে হলে অ্যাডটি সম্পূর্ণ করতে হবে।");
                 }
 
             } catch (error) {
                 console.error("Adsgram error:", error);
                 showToast("এই মুহূর্তে অ্যাড পাওয়া যাচ্ছে না।");
             } finally {
+                adIsRunning = false;
                 adBtn.disabled = false;
                 adBtn.innerHTML = `<i class="fas fa-play-circle text-base"></i> Watch Ad & Play`;
-            }
-        }
-
-        function unlockAndPlay() {
-            closeUnlockModal();
-            if (selectedVideoEmbed) {
-                playVideo(selectedVideoEmbed);
             }
         }
 
@@ -355,4 +370,4 @@
         fetchVideos();
     </script>
 </body>
-</html>
+                </html>
