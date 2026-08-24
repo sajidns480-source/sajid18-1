@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <!-- Monetag Verification Meta Tag -->
+    <meta name="monetag" content="0369336c5a91c84820c99fe411543b61">
+    
     <title>DesiXStream VIP - 18+ Exclusive Media</title>
     
     <!-- Tailwind CSS -->
@@ -43,7 +46,7 @@
             </div>
 
             <!-- Premium Channel Button -->
-            <a href="https://t.me/sajid182026" target="_blank" onclick="triggerHaptic()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-black font-extrabold px-3 py-1.5 rounded-full text-xs shadow-lg transition-all transform active:scale-95 border border-amber-200">
+            <a href="https://t.me/your_telegram_channel" target="_blank" onclick="triggerHaptic()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-black font-extrabold px-3 py-1.5 rounded-full text-xs shadow-lg transition-all transform active:scale-95 border border-amber-200">
                 <i class="fas fa-crown text-amber-900 animate-bounce"></i> 
                 <span>প্রিমিয়াম ভিডিও দেখতে জয়েন হন</span>
             </a>
@@ -151,7 +154,7 @@
         document.getElementById('user-display-name').textContent = tgUser.name;
 
         const BASE_API_URL = 'https://my-video-backend-lake.vercel.app/api/videos';
-        const ADSGRAM_BLOCK_ID = "44249";
+        const ADSGRAM_BLOCK_ID = "44195";
 
         let currentPage = 1;
         let currentQuery = 'hd';
@@ -238,7 +241,6 @@
         /* Modal & Rewarded Ad Functions */
         function openUnlockModal(embedUrl) {
             triggerHaptic();
-            // যে ভিডিওতে ক্লিক করেছে, শুধু সেটার লিংক সংরক্ষণ
             selectedVideoEmbed = embedUrl;
             document.getElementById('unlock-modal').classList.remove('hidden');
         }
@@ -246,7 +248,6 @@
         function closeUnlockModal() {
             triggerHaptic();
             document.getElementById('unlock-modal').classList.add('hidden');
-            // এখানে selectedVideoEmbed null করা হয়নি যেন পরবর্তীতে ব্যবহার করা যায়
         }
 
         async function watchRewardedAd() {
@@ -278,16 +279,13 @@
                 const result = await AdController.show();
                 console.log("Adsgram result:", result);
 
-                // শুধু সম্পূর্ণ Rewarded Ad হলেই নির্দিষ্ট ভিডিওটি প্লে হবে
                 if (result && result.done === true) {
                     const videoToPlay = selectedVideoEmbed;
 
                     showToast("অ্যাড সম্পন্ন! ভিডিও শুরু হচ্ছে...");
 
-                    // Modal বন্ধ করা
                     document.getElementById('unlock-modal').classList.add('hidden');
 
-                    // ক্লিক করা নির্দিষ্ট ভিডিও চালু
                     if (videoToPlay) {
                         playVideo(videoToPlay);
                     }
@@ -370,4 +368,4 @@
         fetchVideos();
     </script>
 </body>
-                </html>
+                </html>            
