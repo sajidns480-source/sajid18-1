@@ -1,371 +1,54 @@
 <!DOCTYPE html>
-<html lang="bn" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <!-- Monetag Verification Meta Tag -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="monetag" content="0369336c5a91c84820c99fe411543b61">
-    
-    <title>DesiXStream VIP - 18+ Exclusive Media</title>
-    
-    <!-- Tailwind CSS -->
+    <title>Desi Motion - Viral & Trending Entertainment</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: { extend: {} }
-        }
-    </script>
-    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- Telegram Web App SDK -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    
-    <!-- Adsgram SDK (sad.min.js) -->
-    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-    
-    <style>
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-    </style>
 </head>
 <body class="bg-gray-900 text-gray-100 font-sans pb-20 min-h-screen">
 
-    <!-- ================= HEADER SECTION ================= -->
-    <header class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white p-5 rounded-b-3xl shadow-xl relative overflow-hidden mb-5">
-        <div class="absolute top-0 right-0 opacity-10 transform translate-x-6 -translate-y-6">
-            <i class="fas fa-play-circle text-9xl"></i>
-        </div>
-        
-        <div class="relative z-10 flex flex-wrap justify-between items-center gap-2 mb-4">
-            <!-- User Info -->
-            <div class="flex items-center gap-2 bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-full text-xs border border-white/10">
-                <i class="fas fa-user-circle text-sm"></i> 
-                <span id="user-display-name">Guest User</span>
-            </div>
-
-            <!-- Premium Channel Button -->
-            <a href="https://t.me/your_telegram_channel" target="_blank" onclick="triggerHaptic()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-black font-extrabold px-3 py-1.5 rounded-full text-xs shadow-lg transition-all transform active:scale-95 border border-amber-200">
-                <i class="fas fa-crown text-amber-900 animate-bounce"></i> 
-                <span>প্রিমিয়াম ভিডিও দেখতে জয়েন হন</span>
-            </a>
-
-            <!-- Badge -->
-            <div class="bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-full text-xs border border-white/10 text-amber-300 font-medium hidden sm:block">
-                <i class="fas fa-film text-xs mr-1"></i> 18+ HD Media
-            </div>
-        </div>
-
-        <!-- App Branding -->
-        <h1 class="text-2xl md:text-3xl font-extrabold text-center mb-1 drop-shadow">DesiXStream VIP</h1>
-        <p class="text-center text-xs text-indigo-100 mb-5">18+ Premium & Exclusive Video Collection</p>
-
-        <!-- Search Bar -->
-        <div class="relative w-full max-w-md mx-auto z-10">
-            <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-            <input type="text" id="search-input" placeholder="সার্চ করুন (যেমন: hd, viral)..." 
-                   class="w-full pl-11 pr-20 py-3 rounded-full text-sm bg-gray-800/90 text-white shadow-lg outline-none focus:ring-2 focus:ring-indigo-400 border border-gray-700 transition-all placeholder-gray-400">
-            <button onclick="handleSearch()" class="absolute right-1.5 top-1/2 transform -translate-y-1/2 bg-indigo-500 hover:bg-indigo-600 active:scale-95 text-white px-4 py-1.5 rounded-full text-xs font-bold transition-all shadow">
-                সার্চ
-            </button>
-        </div>
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white p-6 text-center shadow-lg mb-6">
+        <h1 class="text-3xl font-extrabold mb-2">Desi Motion Clips</h1>
+        <p class="text-xs text-blue-100">Watch trending and funny short video clips online</p>
     </header>
 
-    <!-- Main Container -->
-    <main class="container mx-auto px-4 max-w-7xl">
-        
-        <!-- Category Tags -->
-        <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-3 mb-4">
-            <button class="tag-btn active px-4 py-1.5 bg-indigo-600 text-white rounded-full text-xs font-semibold whitespace-nowrap shadow-md transition-all" onclick="selectTag('hd', this)">🔥 All HD</button>
-            <button class="tag-btn px-4 py-1.5 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-full text-xs font-semibold whitespace-nowrap transition-all" onclick="selectTag('viral', this)">💥 Viral</button>
-            <button class="tag-btn px-4 py-1.5 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-full text-xs font-semibold whitespace-nowrap transition-all" onclick="selectTag('trending', this)">📈 Trending</button>
-            <button class="tag-btn px-4 py-1.5 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-full text-xs font-semibold whitespace-nowrap transition-all" onclick="selectTag('new', this)">🆕 New</button>
-        </div>
+    <!-- Content Container -->
+    <main class="container mx-auto px-4 max-w-5xl">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Video Card 1 -->
+            <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 shadow-md">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=500" class="w-full h-48 object-cover" alt="Movie Clip">
+                <div class="p-4">
+                    <h2 class="text-sm font-bold text-white mb-1">Top Action Scene Highlights</h2>
+                    <p class="text-xs text-gray-400">Duration: 02:45 mins</p>
+                </div>
+            </div>
 
-        <!-- Video Grid -->
-        <div id="video-grid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-5">
-            <!-- Dynamic videos will load here -->
-        </div>
+            <!-- Video Card 2 -->
+            <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 shadow-md">
+                <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500" class="w-full h-48 object-cover" alt="Cinema">
+                <div class="p-4">
+                    <h2 class="text-sm font-bold text-white mb-1">Upcoming Movie Teasers</h2>
+                    <p class="text-xs text-gray-400">Duration: 01:30 mins</p>
+                </div>
+            </div>
 
-        <!-- Pagination -->
-        <div class="flex justify-between items-center my-6 px-2">
-            <button id="prev-btn" onclick="changePage(-1)" disabled class="px-4 py-2 bg-gray-800 text-white rounded-xl text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed hover:bg-gray-700 transition-all border border-gray-700">
-                <i class="fas fa-chevron-left mr-1"></i> Previous
-            </button>
-            <span id="page-num" class="text-xs font-bold bg-gray-800 px-3 py-1.5 rounded-lg border border-gray-700 text-indigo-400">Page: 1</span>
-            <button id="next-btn" onclick="changePage(1)" class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-bold hover:bg-indigo-500 transition-all shadow-md">
-                Next <i class="fas fa-chevron-right ml-1"></i>
-            </button>
+            <!-- Video Card 3 -->
+            <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700 shadow-md">
+                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=500" class="w-full h-48 object-cover" alt="Entertainment">
+                <div class="p-4">
+                    <h2 class="text-sm font-bold text-white mb-1">Funny Viral Shorts Collection</h2>
+                    <p class="text-xs text-gray-400">Duration: 04:12 mins</p>
+                </div>
+            </div>
+
         </div>
     </main>
 
-    <!-- ================= UNLOCK PROMPT MODAL ================= -->
-    <div id="unlock-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-gray-800 border border-gray-700 rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl relative animate-fade-in">
-            <button onclick="closeUnlockModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
-                <i class="fas fa-times text-lg"></i>
-            </button>
-            
-            <div class="w-16 h-16 bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
-                <i class="fas fa-lock"></i>
-            </div>
-            
-            <h3 class="text-lg font-bold text-white mb-2">ভিডিওটি প্লে করুন</h3>
-            <p class="text-xs text-gray-300 mb-6 leading-relaxed">
-                ভিডিওটি উপভোগ করার জন্য একটি ছোট বিজ্ঞাপন (Ad) দেখতে হবে। অ্যাড সম্পন্ন হলে ভিডিওটি চালু হবে।
-            </p>
-            
-            <button onclick="watchRewardedAd()" id="ad-btn" class="w-full py-3 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-bold rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
-                <i class="fas fa-play-circle text-base"></i> Watch Ad & Play
-            </button>
-        </div>
-    </div>
-
-    <!-- ================= POPUP VIDEO PLAYER ================= -->
-    <div id="player-modal" class="fixed inset-0 bg-black/95 z-50 hidden flex-col items-center justify-center p-4 backdrop-blur-sm">
-        <button onclick="closePlayer()" class="absolute top-4 right-4 bg-red-600/80 hover:bg-red-600 text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors z-50">
-            <i class="fas fa-times text-lg"></i>
-        </button>
-        <div id="player-box" class="w-full max-w-3xl aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl border border-gray-800 flex items-center justify-center">
-            <!-- Protected Video iframe -->
-        </div>
-    </div>
-
-    <!-- Toast Notification -->
-    <div id="toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 -translate-y-20 opacity-0 z-50 transition-all duration-300">
-        <div class="bg-gray-800 text-white py-2.5 px-5 rounded-full shadow-2xl border border-indigo-500/30 flex items-center gap-2 text-xs font-medium">
-            <i class="fas fa-info-circle text-indigo-400"></i>
-            <span id="toast-message"></span>
-        </div>
-    </div>
-
-    <script>
-        const tg = window.Telegram?.WebApp;
-        let tgUser = { name: "Guest User" };
-
-        if (tg) {
-            tg.ready();
-            tg.expand();
-            if (tg.initDataUnsafe?.user) {
-                tgUser.name = tg.initDataUnsafe.user.first_name || tg.initDataUnsafe.user.username;
-            }
-        }
-        document.getElementById('user-display-name').textContent = tgUser.name;
-
-        const BASE_API_URL = 'https://my-video-backend-lake.vercel.app/api/videos';
-        const ADSGRAM_BLOCK_ID = "44195";
-
-        let currentPage = 1;
-        let currentQuery = 'hd';
-        
-        // Video Tracking & Ad state variable
-        let selectedVideoEmbed = null;
-        let adIsRunning = false;
-
-        function triggerHaptic() {
-            if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-        }
-
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').textContent = msg;
-            toast.classList.remove('-translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-            setTimeout(() => {
-                toast.classList.add('-translate-y-20', 'opacity-0');
-                toast.classList.remove('translate-y-0', 'opacity-100');
-            }, 2500);
-        }
-
-        async function fetchVideos() {
-            const grid = document.getElementById('video-grid');
-            
-            grid.innerHTML = Array(6).fill(0).map(() => `
-                <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 animate-pulse">
-                    <div class="w-full h-28 bg-gray-700"></div>
-                    <div class="p-3 space-y-2">
-                        <div class="h-3 bg-gray-700 rounded w-3/4"></div>
-                        <div class="h-2 bg-gray-700 rounded w-1/2"></div>
-                    </div>
-                </div>
-            `).join('');
-
-            try {
-                const url = `${BASE_API_URL}?q=${encodeURIComponent(currentQuery)}&page=${currentPage}&per_page=30`;
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Network response error');
-
-                const data = await response.json();
-
-                if (data.status && data.videos && data.videos.length > 0) {
-                    grid.innerHTML = '';
-                    data.videos.forEach(video => {
-                        const card = document.createElement('div');
-                        card.className = 'bg-gray-800/80 rounded-2xl overflow-hidden border border-gray-700/60 shadow-lg hover:border-indigo-500/50 transition-all flex flex-col justify-between group cursor-pointer';
-                        
-                        card.innerHTML = `
-                            <div>
-                                <div class="relative w-full aspect-video bg-gray-900 overflow-hidden">
-                                    <img src="${video.thumb}" alt="thumb" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://via.placeholder.com/140x100?text=No+Image'">
-                                    
-                                    <div class="absolute bottom-1.5 right-1.5 bg-black/70 backdrop-blur-sm text-gray-300 text-[10px] px-2 py-0.5 rounded-md font-semibold">
-                                        ⏱ ${video.duration || '0'}m
-                                    </div>
-                                </div>
-                                <div class="p-3">
-                                    <h3 class="text-xs font-semibold text-gray-100 line-clamp-2 leading-snug group-hover:text-indigo-400 transition-colors">${video.title}</h3>
-                                </div>
-                            </div>
-                            <div class="p-3 pt-0">
-                                <button class="w-full py-2 bg-indigo-600/20 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl text-xs font-bold transition-all border border-indigo-500/30 flex items-center justify-center gap-1.5">
-                                    <i class="fas fa-play text-[10px]"></i> প্লে করুন
-                                </button>
-                            </div>
-                        `;
-                        card.onclick = () => openUnlockModal(video.embed);
-                        grid.appendChild(card);
-                    });
-                } else {
-                    grid.innerHTML = '<p class="text-center col-span-full py-10 text-gray-400 text-xs">কোনো ভিডিও পাওয়া যায়নি!</p>';
-                }
-            } catch (error) {
-                console.error("Fetch error:", error);
-                grid.innerHTML = '<p class="text-center col-span-full py-10 text-red-400 text-xs">ডেটা লোড করতে সমস্যা হয়েছে!</p>';
-            }
-
-            document.getElementById('page-num').innerText = `Page: ${currentPage}`;
-            document.getElementById('prev-btn').disabled = (currentPage === 1);
-        }
-
-        /* Modal & Rewarded Ad Functions */
-        function openUnlockModal(embedUrl) {
-            triggerHaptic();
-            selectedVideoEmbed = embedUrl;
-            document.getElementById('unlock-modal').classList.remove('hidden');
-        }
-
-        function closeUnlockModal() {
-            triggerHaptic();
-            document.getElementById('unlock-modal').classList.add('hidden');
-        }
-
-        async function watchRewardedAd() {
-            triggerHaptic();
-
-            if (adIsRunning) return;
-
-            if (!window.Adsgram) {
-                showToast("Adsgram লোড হয়নি। কিছুক্ষণ পরে আবার চেষ্টা করুন।");
-                return;
-            }
-
-            if (!selectedVideoEmbed) {
-                showToast("ভিডিও লিংক পাওয়া যায়নি। আবার চেষ্টা করুন।");
-                return;
-            }
-
-            const adBtn = document.getElementById('ad-btn');
-
-            try {
-                adIsRunning = true;
-                adBtn.disabled = true;
-                adBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> অ্যাড লোড হচ্ছে...`;
-
-                const AdController = window.Adsgram.init({
-                    blockId: ADSGRAM_BLOCK_ID
-                });
-
-                const result = await AdController.show();
-                console.log("Adsgram result:", result);
-
-                if (result && result.done === true) {
-                    const videoToPlay = selectedVideoEmbed;
-
-                    showToast("অ্যাড সম্পন্ন! ভিডিও শুরু হচ্ছে...");
-
-                    document.getElementById('unlock-modal').classList.add('hidden');
-
-                    if (videoToPlay) {
-                        playVideo(videoToPlay);
-                    }
-                } else {
-                    showToast("ভিডিও দেখতে হলে অ্যাডটি সম্পূর্ণ করতে হবে।");
-                }
-
-            } catch (error) {
-                console.error("Adsgram error:", error);
-                showToast("এই মুহূর্তে অ্যাড পাওয়া যাচ্ছে না।");
-            } finally {
-                adIsRunning = false;
-                adBtn.disabled = false;
-                adBtn.innerHTML = `<i class="fas fa-play-circle text-base"></i> Watch Ad & Play`;
-            }
-        }
-
-        function playVideo(embedUrl) {
-            document.getElementById('player-box').innerHTML = `
-                <iframe src="${embedUrl}" 
-                        class="w-full h-full border-0" 
-                        allowfullscreen 
-                        sandbox="allow-scripts allow-same-origin">
-                </iframe>`;
-            
-            const modal = document.getElementById('player-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-
-            if (tg?.BackButton) {
-                tg.BackButton.show();
-                tg.BackButton.onClick(closePlayer);
-            }
-        }
-
-        function closePlayer() {
-            triggerHaptic();
-            const modal = document.getElementById('player-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.getElementById('player-box').innerHTML = '';
-
-            if (tg?.BackButton) tg.BackButton.hide();
-        }
-
-        function selectTag(query, btnElement) {
-            triggerHaptic();
-            document.querySelectorAll('.tag-btn').forEach(b => {
-                b.className = 'tag-btn px-4 py-1.5 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-full text-xs font-semibold whitespace-nowrap transition-all';
-            });
-            btnElement.className = 'tag-btn active px-4 py-1.5 bg-indigo-600 text-white rounded-full text-xs font-semibold whitespace-nowrap shadow-md transition-all';
-            currentQuery = query;
-            currentPage = 1;
-            fetchVideos();
-        }
-
-        function changePage(step) {
-            triggerHaptic();
-            if (currentPage + step > 0) {
-                currentPage += step;
-                fetchVideos();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        }
-
-        function handleSearch() {
-            triggerHaptic();
-            const query = document.getElementById('search-input').value.trim();
-            if (query !== '') {
-                currentQuery = query;
-                currentPage = 1;
-                fetchVideos();
-            }
-        }
-
-        document.getElementById('search-input').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleSearch();
-        });
-
-        fetchVideos();
-    </script>
 </body>
-                </html>            
+                    </html>
