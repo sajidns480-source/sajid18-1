@@ -19,9 +19,6 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Adsgram SDK (sad.min.js) -->
-    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-    
     <!-- Monetag Vignette Ad Script -->
     <script>(function(s){s.dataset.zone='11643186',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
@@ -115,12 +112,20 @@
             </div>
             
             <h3 class="text-lg font-bold text-white mb-2">ভিডিওটি প্লে করুন</h3>
-            <p class="text-xs text-gray-300 mb-6 leading-relaxed">
-                ভিডিওটি উপভোগ করার জন্য একটি ছোট বিজ্ঞাপন (Ad) দেখতে হবে। অ্যাড সম্পন্ন হলে ভিডিওটি চালু হবে।
+            <p class="text-xs text-gray-300 mb-4 leading-relaxed">
+                ভিডিওটি উপভোগ করার জন্য একটি ছোট প্রসেস সম্পন্ন করতে হবে। কিভাবে আনলক করতে হয় জানতে নিচে ওপেন বাটন চাপুন।
             </p>
+
+            <!-- কিভাবে আনলক করব ওপেন বাটন -->
+            <a href="https://t.me/Sajidandbot/sajid181vercelapp" target="_blank" onclick="triggerHaptic()" class="mb-5 inline-flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 text-indigo-300 border border-indigo-500/40 w-full py-2 px-4 rounded-xl text-xs font-semibold transition-all shadow-sm">
+                <i class="fas fa-question-circle text-indigo-400"></i>
+                <span>কিভাবে আনলক করব</span>
+                <span class="bg-indigo-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md ml-auto">ওপেন</span>
+            </a>
             
+            <!-- Unlock Button -->
             <button onclick="watchRewardedAd()" id="ad-btn" class="w-full py-3 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-bold rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
-                <i class="fas fa-play-circle text-base"></i> Watch Ad & Play
+                <i class="fas fa-lock-open text-base"></i> Unlock Video
             </button>
         </div>
     </div>
@@ -131,7 +136,7 @@
             <i class="fas fa-times text-lg"></i>
         </button>
 
-        <!-- Top Ad Container (Video প্লেয়ারের উপরের খালি স্থান) -->
+        <!-- Top Ad Container -->
         <div class="w-full max-w-3xl min-h-[60px] flex items-center justify-center my-2 text-center overflow-hidden">
             <!-- Monetag In-Push/Native Ad auto renders here -->
         </div>
@@ -141,7 +146,7 @@
             <!-- Protected Video iframe -->
         </div>
 
-        <!-- Bottom Ad Container (Video প্লেয়ারের নিচের খালি স্থান) -->
+        <!-- Bottom Ad Container -->
         <div class="w-full max-w-3xl min-h-[60px] flex items-center justify-center my-2 text-center overflow-hidden">
             <!-- Monetag In-Push/Native Ad auto renders here -->
         </div>
@@ -169,7 +174,7 @@
         document.getElementById('user-display-name').textContent = tgUser.name;
 
         const BASE_API_URL = 'https://my-video-backend-lake.vercel.app/api/videos';
-        const ADSGRAM_BLOCK_ID = "44195";
+        const BOT_MINI_APP_LINK = "https://t.me/Sajidandbot/sajid181vercelapp";
 
         let currentPage = 1;
         let currentQuery = 'hd';
@@ -268,11 +273,6 @@
 
             if (adIsRunning) return;
 
-            if (!window.Adsgram) {
-                showToast("Adsgram লোড হয়নি। কিছুক্ষণ পরে আবার চেষ্টা করুন।");
-                return;
-            }
-
             if (!selectedVideoEmbed) {
                 showToast("ভিডিও লিংক পাওয়া যায়নি। আবার চেষ্টা করুন।");
                 return;
@@ -283,34 +283,30 @@
             try {
                 adIsRunning = true;
                 adBtn.disabled = true;
-                adBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> অ্যাড লোড হচ্ছে...`;
+                adBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> আনলক হচ্ছে...`;
 
-                const AdController = window.Adsgram.init({
-                    blockId: ADSGRAM_BLOCK_ID
-                });
-
-                const result = await AdController.show();
-                console.log("Adsgram result:", result);
-
-                if (result && result.done === true) {
-                    const videoToPlay = selectedVideoEmbed;
-                    showToast("অ্যাড সম্পন্ন! ভিডিও শুরু হচ্ছে...");
-                    document.getElementById('unlock-modal').classList.add('hidden');
-
-                    if (videoToPlay) {
-                        playVideo(videoToPlay);
-                    }
+                // Bot Direct Link Monetization Integration
+                if (tg && tg.openTelegramLink) {
+                    tg.openTelegramLink(BOT_MINI_APP_LINK);
                 } else {
-                    showToast("ভিডিও দেখতে হলে অ্যাডটি সম্পূর্ণ করতে হবে।");
+                    window.open(BOT_MINI_APP_LINK, '_blank');
+                }
+
+                const videoToPlay = selectedVideoEmbed;
+                showToast("ভিডিও শুরু হচ্ছে...");
+                document.getElementById('unlock-modal').classList.add('hidden');
+
+                if (videoToPlay) {
+                    playVideo(videoToPlay);
                 }
 
             } catch (error) {
-                console.error("Adsgram error:", error);
-                showToast("এই মুহূর্তে অ্যাড পাওয়া যাচ্ছে না।");
+                console.error("Unlock error:", error);
+                showToast("আনলক করতে সমস্যা হচ্ছে। আবার চেষ্টা করুন।");
             } finally {
                 adIsRunning = false;
                 adBtn.disabled = false;
-                adBtn.innerHTML = `<i class="fas fa-play-circle text-base"></i> Watch Ad & Play`;
+                adBtn.innerHTML = `<i class="fas fa-lock-open text-base"></i> Unlock Video`;
             }
         }
 
@@ -379,4 +375,4 @@
         fetchVideos();
     </script>
 </body>
-            </html>
+                    </html>
