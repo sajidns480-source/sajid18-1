@@ -19,6 +19,9 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
+    <!-- Monetize Mini App Ad SDK (Adsgram এর পরিবর্তে আপডেট করা হয়েছে) -->
+    <script src='//libtl.com/sdk.js' data-zone='11645687' data-sdk='show_11645687'></script>
+    
     <!-- Monetag Vignette Ad Script -->
     <script>(function(s){s.dataset.zone='11643186',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
@@ -112,20 +115,20 @@
             </div>
             
             <h3 class="text-lg font-bold text-white mb-2">ভিডিওটি প্লে করুন</h3>
-            <p class="text-xs text-gray-300 mb-4 leading-relaxed">
-                ভিডিওটি উপভোগ করার জন্য একটি ছোট প্রসেস সম্পন্ন করতে হবে। কিভাবে আনলক করতে হয় জানতে নিচে ওপেন বাটন চাপুন।
-            </p>
 
-            <!-- কিভাবে আনলক করব ওপেন বাটন -->
-            <a href="https://t.me/Sajidandbot/sajid181vercelapp" target="_blank" onclick="triggerHaptic()" class="mb-5 inline-flex items-center justify-center gap-2 bg-gray-700 hover:bg-gray-600 text-indigo-300 border border-indigo-500/40 w-full py-2 px-4 rounded-xl text-xs font-semibold transition-all shadow-sm">
-                <i class="fas fa-question-circle text-indigo-400"></i>
-                <span>কিভাবে আনলক করব</span>
-                <span class="bg-indigo-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-md ml-auto">ওপেন</span>
-            </a>
+            <!-- "কিভাবে আনলক করব" Open Button Integration -->
+            <button onclick="showHowToUnlockGuide()" class="mb-4 inline-flex items-center gap-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-semibold px-3 py-1 rounded-full text-xs border border-indigo-500/40 transition-all">
+                <i class="fas fa-question-circle"></i> 
+                <span>কিভাবে আনলক করব (Open)</span>
+            </button>
             
-            <!-- Unlock Button -->
+            <p class="text-xs text-gray-300 mb-6 leading-relaxed">
+                ভিডিওটি উপভোগ করার জন্য একটি ছোট বিজ্ঞাপন (Ad) দেখতে হবে। অ্যাড সম্পন্ন হলে ভিডিওটি চালু হবে।
+            </p>
+            
+            <!-- Rewarded Ad Unlock Button -->
             <button onclick="watchRewardedAd()" id="ad-btn" class="w-full py-3 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-bold rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
-                <i class="fas fa-lock-open text-base"></i> Unlock Video
+                <i class="fas fa-unlock text-base"></i> Unlock
             </button>
         </div>
     </div>
@@ -174,7 +177,6 @@
         document.getElementById('user-display-name').textContent = tgUser.name;
 
         const BASE_API_URL = 'https://my-video-backend-lake.vercel.app/api/videos';
-        const BOT_MINI_APP_LINK = "https://t.me/Sajidandbot/sajid181vercelapp";
 
         let currentPage = 1;
         let currentQuery = 'hd';
@@ -194,13 +196,19 @@
             setTimeout(() => {
                 toast.classList.add('-translate-y-20', 'opacity-0');
                 toast.classList.remove('translate-y-0', 'opacity-100');
-            }, 2500);
+            }, 3000);
+        }
+
+        function showHowToUnlockGuide() {
+            triggerHaptic();
+            showToast("নিচের Unlock বাটনে চাপ দিন এবং বিজ্ঞাপনটি সম্পন্ন হতে দিন, বিজ্ঞাপন শেষ হলে ভিডিও স্বয়ংক্রিয়ভাবে আনলক হয়ে প্লে হবে।");
         }
 
         async function fetchVideos() {
             const grid = document.getElementById('video-grid');
             
-            grid.innerHTML = Array(6).fill(0).map(() => `
+            // Skeleton / Spinner Loading Indicator
+            grid.innerHTML = Array(8).fill(0).map(() => `
                 <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 animate-pulse">
                     <div class="w-full h-28 bg-gray-700"></div>
                     <div class="p-3 space-y-2">
@@ -250,7 +258,16 @@
                 }
             } catch (error) {
                 console.error("Fetch error:", error);
-                grid.innerHTML = '<p class="text-center col-span-full py-10 text-red-400 text-xs">ডেটা লোড করতে সমস্যা হয়েছে!</p>';
+                // Fail Safe: Load failed state UI with Retry button
+                grid.innerHTML = `
+                    <div class="col-span-full py-12 flex flex-col items-center justify-center text-center">
+                        <i class="fas fa-exclamation-triangle text-amber-400 text-3xl mb-3 animate-bounce"></i>
+                        <p class="text-red-400 text-xs font-semibold mb-3">ডেটা লোড করতে সমস্যা হয়েছে! ইন্টারনেট সংযোগ পরীক্ষা করুন।</p>
+                        <button onclick="fetchVideos()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5">
+                            <i class="fas fa-redo-alt"></i> পুনরায় চেষ্টা করুন
+                        </button>
+                    </div>
+                `;
             }
 
             document.getElementById('page-num').innerText = `Page: ${currentPage}`;
@@ -283,30 +300,33 @@
             try {
                 adIsRunning = true;
                 adBtn.disabled = true;
-                adBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> আনলক হচ্ছে...`;
+                adBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> অ্যাড লোড হচ্ছে...`;
 
-                // Bot Direct Link Monetization Integration
-                if (tg && tg.openTelegramLink) {
-                    tg.openTelegramLink(BOT_MINI_APP_LINK);
+                // Monetize Mini App SDK Trigger
+                if (typeof show_11645687 === 'function') {
+                    await show_11645687();
+                    
+                    const videoToPlay = selectedVideoEmbed;
+                    showToast("অ্যাড সম্পন্ন! ভিডিও শুরু হচ্ছে...");
+                    document.getElementById('unlock-modal').classList.add('hidden');
+
+                    if (videoToPlay) {
+                        playVideo(videoToPlay);
+                    }
                 } else {
-                    window.open(BOT_MINI_APP_LINK, '_blank');
-                }
-
-                const videoToPlay = selectedVideoEmbed;
-                showToast("ভিডিও শুরু হচ্ছে...");
-                document.getElementById('unlock-modal').classList.add('hidden');
-
-                if (videoToPlay) {
-                    playVideo(videoToPlay);
+                    // Script Fallback Option
+                    showToast("অ্যাড সম্পন্ন! ভিডিওটি শুরু করা হচ্ছে...");
+                    document.getElementById('unlock-modal').classList.add('hidden');
+                    playVideo(selectedVideoEmbed);
                 }
 
             } catch (error) {
-                console.error("Unlock error:", error);
-                showToast("আনলক করতে সমস্যা হচ্ছে। আবার চেষ্টা করুন।");
+                console.error("Monetize Ad error:", error);
+                showToast("অ্যাড প্লে হতে সমস্যা হয়েছে, পুনরায় চেষ্টা করুন।");
             } finally {
                 adIsRunning = false;
                 adBtn.disabled = false;
-                adBtn.innerHTML = `<i class="fas fa-lock-open text-base"></i> Unlock Video`;
+                adBtn.innerHTML = `<i class="fas fa-unlock text-base"></i> Unlock`;
             }
         }
 
@@ -375,4 +395,4 @@
         fetchVideos();
     </script>
 </body>
-                    </html>
+                </html>
