@@ -268,11 +268,6 @@
 
             if (adIsRunning) return;
 
-            if (!window.Adsgram) {
-                showToast("Adsgram লোড হয়নি। কিছুক্ষণ পরে আবার চেষ্টা করুন।");
-                return;
-            }
-
             if (!selectedVideoEmbed) {
                 showToast("ভিডিও লিংক পাওয়া যায়নি। আবার চেষ্টা করুন।");
                 return;
@@ -285,6 +280,10 @@
                 adBtn.disabled = true;
                 adBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> অ্যাড লোড হচ্ছে...`;
 
+                if (!window.Adsgram) {
+                    throw new Error("Adsgram SDK loaded fail");
+                }
+
                 const AdController = window.Adsgram.init({
                     blockId: ADSGRAM_BLOCK_ID
                 });
@@ -296,17 +295,19 @@
                     const videoToPlay = selectedVideoEmbed;
                     showToast("অ্যাড সম্পন্ন! ভিডিও শুরু হচ্ছে...");
                     document.getElementById('unlock-modal').classList.add('hidden');
-
-                    if (videoToPlay) {
-                        playVideo(videoToPlay);
-                    }
+                    playVideo(videoToPlay);
                 } else {
                     showToast("ভিডিও দেখতে হলে অ্যাডটি সম্পূর্ণ করতে হবে।");
                 }
 
             } catch (error) {
-                console.error("Adsgram error:", error);
-                showToast("এই মুহূর্তে অ্যাড পাওয়া যাচ্ছে না।");
+                console.warn("Adsgram error or No Ads available, bypassing for user experience:", error);
+                
+                // ফলব্যাক: অ্যাড না থাকলে বা এরর দিলে সরাসরি ভিডিও চালিয়ে দেওয়া হবে
+                showToast("এই মুহূর্তে কোনো অ্যাড নেই, সরাসরি ভিডিও চালু হচ্ছে...");
+                document.getElementById('unlock-modal').classList.add('hidden');
+                playVideo(selectedVideoEmbed);
+
             } finally {
                 adIsRunning = false;
                 adBtn.disabled = false;
@@ -379,4 +380,4 @@
         fetchVideos();
     </script>
 </body>
-            </html>
+                                                                          </html>
