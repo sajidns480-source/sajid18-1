@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>DesiXStream VIP - 18+ Exclusive Media</title>
+    <title>DesiXStream VIP - Exclusive Media</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -19,8 +19,8 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- Monetize Mini App Ad SDK -->
-    <script src='//libtl.com/sdk.js' data-zone='11645687' data-sdk='show_11645687'></script>
+    <!-- Adsgram SDK (sad.min.js) -->
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
     
     <!-- Monetag Vignette Ad Script -->
     <script>(function(s){s.dataset.zone='11643186',s.src='https://n6wxm.com/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -33,17 +33,7 @@
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100 font-sans pb-20 min-h-screen relative">
-
-    <!-- ================= INITIAL APP LOADING OVERLAY ================= -->
-    <div id="app-loader" class="fixed inset-0 bg-gray-900 z-[100] flex flex-col items-center justify-center p-4 transition-opacity duration-500">
-        <div class="relative flex items-center justify-center mb-6">
-            <div class="w-20 h-20 border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div>
-            <i class="fas fa-play text-2xl text-indigo-400 absolute"></i>
-        </div>
-        <h2 class="text-xl font-bold text-white mb-2">DesiXStream VIP</h2>
-        <p class="text-xs text-indigo-300 animate-pulse font-medium">কন্টেন্ট লোড হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...</p>
-    </div>
+<body class="bg-gray-900 text-gray-100 font-sans pb-20 min-h-screen">
 
     <!-- ================= HEADER SECTION ================= -->
     <header class="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-600 text-white p-5 rounded-b-3xl shadow-xl relative overflow-hidden mb-5">
@@ -59,7 +49,7 @@
             </div>
 
             <!-- Premium Channel Button -->
-            <a href="https://t.me/your_telegram_channel" target="_blank" onclick="triggerHaptic()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-black font-extrabold px-3 py-1.5 rounded-full text-xs shadow-lg transition-all transform active:scale-95 border border-amber-200">
+            <a href="https://t.me/sajid182026" target="_blank" onclick="triggerHaptic()" class="flex items-center gap-1.5 bg-amber-400 hover:bg-amber-300 text-black font-extrabold px-3 py-1.5 rounded-full text-xs shadow-lg transition-all transform active:scale-95 border border-amber-200">
                 <i class="fas fa-crown text-amber-900 animate-bounce"></i> 
                 <span>প্রিমিয়াম ভিডিও দেখতে জয়েন হন</span>
             </a>
@@ -125,20 +115,12 @@
             </div>
             
             <h3 class="text-lg font-bold text-white mb-2">ভিডিওটি প্লে করুন</h3>
-
-            <!-- "কিভাবে আনলক করব" Open Button (Direct Link Trigger) -->
-            <a href="https://t.me/ytbail" target="_blank" onclick="triggerHaptic()" class="mb-4 inline-flex items-center gap-1.5 bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 font-semibold px-3 py-1 rounded-full text-xs border border-indigo-500/40 transition-all">
-                <i class="fas fa-question-circle"></i> 
-                <span>কিভাবে আনলক করব (Open)</span>
-            </a>
-            
             <p class="text-xs text-gray-300 mb-6 leading-relaxed">
                 ভিডিওটি উপভোগ করার জন্য একটি ছোট বিজ্ঞাপন (Ad) দেখতে হবে। অ্যাড সম্পন্ন হলে ভিডিওটি চালু হবে।
             </p>
             
-            <!-- Rewarded Ad Unlock Button -->
             <button onclick="watchRewardedAd()" id="ad-btn" class="w-full py-3 bg-gradient-to-r from-amber-500 to-indigo-600 hover:from-amber-600 hover:to-indigo-700 text-white font-bold rounded-2xl text-xs shadow-lg flex items-center justify-center gap-2 active:scale-95 transition-all">
-                <i class="fas fa-unlock text-base"></i> Unlock
+                <i class="fas fa-play-circle text-base"></i> Watch Ad & Play
             </button>
         </div>
     </div>
@@ -149,7 +131,7 @@
             <i class="fas fa-times text-lg"></i>
         </button>
 
-        <!-- Top Ad Container -->
+        <!-- Top Ad Container (Video প্লেয়ারের উপরের খালি স্থান) -->
         <div class="w-full max-w-3xl min-h-[60px] flex items-center justify-center my-2 text-center overflow-hidden">
             <!-- Monetag In-Push/Native Ad auto renders here -->
         </div>
@@ -159,7 +141,7 @@
             <!-- Protected Video iframe -->
         </div>
 
-        <!-- Bottom Ad Container -->
+        <!-- Bottom Ad Container (Video প্লেয়ারের নিচের খালি স্থান) -->
         <div class="w-full max-w-3xl min-h-[60px] flex items-center justify-center my-2 text-center overflow-hidden">
             <!-- Monetag In-Push/Native Ad auto renders here -->
         </div>
@@ -187,6 +169,7 @@
         document.getElementById('user-display-name').textContent = tgUser.name;
 
         const BASE_API_URL = 'https://my-video-backend-lake.vercel.app/api/videos';
+        const ADSGRAM_BLOCK_ID = "44946";
 
         let currentPage = 1;
         let currentQuery = 'hd';
@@ -206,23 +189,13 @@
             setTimeout(() => {
                 toast.classList.add('-translate-y-20', 'opacity-0');
                 toast.classList.remove('translate-y-0', 'opacity-100');
-            }, 3000);
-        }
-
-        function hideAppLoader() {
-            const loader = document.getElementById('app-loader');
-            if (loader) {
-                loader.classList.add('opacity-0');
-                setTimeout(() => {
-                    loader.classList.add('hidden');
-                }, 500);
-            }
+            }, 2500);
         }
 
         async function fetchVideos() {
             const grid = document.getElementById('video-grid');
             
-            grid.innerHTML = Array(8).fill(0).map(() => `
+            grid.innerHTML = Array(6).fill(0).map(() => `
                 <div class="bg-gray-800 rounded-2xl overflow-hidden border border-gray-700/50 animate-pulse">
                     <div class="w-full h-28 bg-gray-700"></div>
                     <div class="p-3 space-y-2">
@@ -272,17 +245,7 @@
                 }
             } catch (error) {
                 console.error("Fetch error:", error);
-                grid.innerHTML = `
-                    <div class="col-span-full py-12 flex flex-col items-center justify-center text-center">
-                        <i class="fas fa-exclamation-triangle text-amber-400 text-3xl mb-3 animate-bounce"></i>
-                        <p class="text-red-400 text-xs font-semibold mb-3">ডেটা লোড করতে সমস্যা হয়েছে! ইন্টারনেট সংযোগ পরীক্ষা করুন।</p>
-                        <button onclick="fetchVideos()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-xs font-bold transition-all shadow-md flex items-center gap-1.5">
-                            <i class="fas fa-redo-alt"></i> পুনরায় চেষ্টা করুন
-                        </button>
-                    </div>
-                `;
-            } finally {
-                hideAppLoader();
+                grid.innerHTML = '<p class="text-center col-span-full py-10 text-red-400 text-xs">ডেটা লোড করতে সমস্যা হয়েছে!</p>';
             }
 
             document.getElementById('page-num').innerText = `Page: ${currentPage}`;
@@ -305,6 +268,11 @@
 
             if (adIsRunning) return;
 
+            if (!window.Adsgram) {
+                showToast("Adsgram লোড হয়নি। কিছুক্ষণ পরে আবার চেষ্টা করুন।");
+                return;
+            }
+
             if (!selectedVideoEmbed) {
                 showToast("ভিডিও লিংক পাওয়া যায়নি। আবার চেষ্টা করুন।");
                 return;
@@ -317,9 +285,14 @@
                 adBtn.disabled = true;
                 adBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> অ্যাড লোড হচ্ছে...`;
 
-                if (typeof show_11645687 === 'function') {
-                    await show_11645687();
-                    
+                const AdController = window.Adsgram.init({
+                    blockId: ADSGRAM_BLOCK_ID
+                });
+
+                const result = await AdController.show();
+                console.log("Adsgram result:", result);
+
+                if (result && result.done === true) {
                     const videoToPlay = selectedVideoEmbed;
                     showToast("অ্যাড সম্পন্ন! ভিডিও শুরু হচ্ছে...");
                     document.getElementById('unlock-modal').classList.add('hidden');
@@ -328,18 +301,16 @@
                         playVideo(videoToPlay);
                     }
                 } else {
-                    showToast("অ্যাড সম্পন্ন! ভিডিওটি শুরু করা হচ্ছে...");
-                    document.getElementById('unlock-modal').classList.add('hidden');
-                    playVideo(selectedVideoEmbed);
+                    showToast("ভিডিও দেখতে হলে অ্যাডটি সম্পূর্ণ করতে হবে।");
                 }
 
             } catch (error) {
-                console.error("Monetize Ad error:", error);
-                showToast("অ্যাড প্লে হতে সমস্যা হয়েছে, পুনরায় চেষ্টা করুন।");
+                console.error("Adsgram error:", error);
+                showToast("এই মুহূর্তে অ্যাড পাওয়া যাচ্ছে না।");
             } finally {
                 adIsRunning = false;
                 adBtn.disabled = false;
-                adBtn.innerHTML = `<i class="fas fa-unlock text-base"></i> Unlock`;
+                adBtn.innerHTML = `<i class="fas fa-play-circle text-base"></i> Watch Ad & Play`;
             }
         }
 
@@ -376,7 +347,7 @@
             document.querySelectorAll('.tag-btn').forEach(b => {
                 b.className = 'tag-btn px-4 py-1.5 bg-gray-800 text-gray-300 hover:bg-gray-700 rounded-full text-xs font-semibold whitespace-nowrap transition-all';
             });
-            btnElement.className = 'tag-btn active px-4 py-1.5 bg-indigo-600 text-white rounded-full text-xs font-semibold whitespace-nowrap shadow-md transition-all';
+            .className = 'tag-btn active px-4 py-1.5 bg-indigo-600 text-white rounded-full text-xs font-semibold whitespace-nowrap shadow-md transition-all';
             currentQuery = query;
             currentPage = 1;
             fetchVideos();
@@ -408,4 +379,4 @@
         fetchVideos();
     </script>
 </body>
-    </html>
+            </html>
